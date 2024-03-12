@@ -5,13 +5,19 @@ from flask import Flask, render_template, request, url_for, redirect, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, EmailField, BooleanField, IntegerField, DateField
 from wtforms.validators import DataRequired
+from flask_restful import abort, Api
+from users_resource import UsersResource, UsersListResource
 
 from data.jobs import Jobs
 
 app = Flask(__name__)
+api = Api(app)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+api.add_resource(UsersResource, '/api/v2/users')
+api.add_resource(UsersListResource, '/api/v2/users/<int:user_id>')
 
 
 @login_manager.user_loader
