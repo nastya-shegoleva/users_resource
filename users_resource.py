@@ -1,11 +1,7 @@
 from flask_restful import reqparse, abort, Api, Resource
-from flask import Flask
 from data import db_session
 from flask import jsonify
 from data.users import User
-
-app = Flask(__name__)
-api = Api(app)
 
 
 def abort_if_users_not_found(users_id):
@@ -68,4 +64,3 @@ class UsersListResource(Resource):
         session.add(users)
         session.commit()
         return jsonify({'id': users.id})
-
